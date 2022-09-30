@@ -152,7 +152,7 @@ public class Program {
         else if (hour >= 12 && hour < 18)
             timeOfDay = "Добрый день";
         else if (hour >= 18 && hour < 23)
-            timeOfDay = "Добрый день";
+            timeOfDay = "Добрый вечер";
         else
             timeOfDay = "Доброй ночи";
 
@@ -331,10 +331,7 @@ public class Program {
             var expChars = exp.toCharArray();
             for (int i = 0, counter = 0; i < expChars.length; i++)
                 if (expChars[i] == '?')
-                {
-                    expChars[i] = passes[counter];
-                    counter++;
-                }
+                    expChars[i] = passes[counter++];
             System.out.println(new String(expChars));
         }
     }
@@ -362,10 +359,10 @@ public class Program {
             return Collections.emptyList();
 
         if (numbers == null)
-            numbers = Collections.emptyList();
+            numbers = new ArrayList<>();
 
         if (result == null)
-            result = Collections.emptyList();
+            result = new ArrayList<>();
 
         List<Integer> digitsCopy = new ArrayList<>(digits);
         var digit = digitsCopy.get(0);
