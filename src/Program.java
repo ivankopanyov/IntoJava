@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ public class Program {
      * Точка входа в приложение.
      */
     public static void main(String[] args) throws IOException {
-        task2();
+        task3();
     }
 
     //region Методы пользавотельского ввода
@@ -174,6 +175,48 @@ public class Program {
                 counter = 0;
         }
         return max;
+    }
+
+    //endregion
+
+    //region Задача 3
+
+    /**
+     * Условие:
+     * Дан массив nums = [3,2,2,3] и число val = 3.
+     * Если в массиве есть числа, равные заданному, нужно перенести эти элементы в конец массива.
+     * Таким образом, первые несколько (или все) элементов массива должны быть отличны от заданного,
+     * а остальные - равны ему.
+     */
+    private static void task3() throws IOException {
+        System.out.println("\n ** Перенос всех элементов с заданным значением в конец массива. ** \n");
+        int[] numbers = inputNumbers("Укажите целые числа через пробел: ");
+        int number = inputNumber("Укажите число для переноса: ");
+        int[] result = transferNumber(numbers, number);
+        String output = String.format("Результат: %s", Arrays.toString(result));
+        System.out.println(output);
+    }
+
+    /**
+     * Метод перестановки всех элементов массива, равных переданному значению в конец массива.
+     * @param numbers Массив целых чисел для перестановки.
+     * @param transferredNumber Значение перстанвливаемых элементов.
+     * @return Массив с результатом перестановки.
+     */
+    private static int[] transferNumber(int[] numbers, int transferredNumber)
+    {
+        if (numbers == null || numbers.length == 0)
+            return numbers;
+
+        var result = new int[numbers.length];
+
+        for (int i = 0, j = 0, k = numbers.length - 1; i < numbers.length; i++)
+            if (numbers[i] != transferredNumber)
+                result[j++] = numbers[i];
+            else
+                result[k--] = transferredNumber;
+
+        return result;
     }
 
     //endregion
