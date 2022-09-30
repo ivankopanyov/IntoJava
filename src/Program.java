@@ -9,10 +9,36 @@ import java.util.regex.Pattern;
 public class Program {
 
     /**
+     * Константа, хранящая колличество задач.
+     */
+    private static final int TASK_COUNT = 5;
+
+    /**
      * Точка входа в приложение.
      */
     public static void main(String[] args) throws IOException {
-        task5();
+        StringBuilder stringBuilder = new StringBuilder().append('\n');
+        for(int i = 1; i <= TASK_COUNT; i++)
+            stringBuilder
+                    .append(i)
+                    .append(" >> Задача ")
+                    .append(i)
+                    .append('\n');
+
+        String message = stringBuilder.append("\n0 >> Выход\n\nУкажите номер задачи: ").toString();
+
+        while (true) {
+            int number = inputNumber(message, 0, 5);
+
+            switch (number) {
+                case 0: return;
+                case 1: task1(); break;
+                case 2: task2(); break;
+                case 3: task3(); break;
+                case 4: task4(); break;
+                case 5: task5(); break;
+            }
+        }
     }
 
     //region Методы пользавотельского ввода
