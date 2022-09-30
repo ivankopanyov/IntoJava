@@ -12,8 +12,89 @@ public class Program {
      * Точка входа в приложение.
      */
     public static void main(String[] args) throws IOException {
-        task1();
+        task2();
     }
+
+    //region Методы пользавотельского ввода
+
+    /**
+     * Метод ввода целого числа в консоли.
+     * @param message Сообщение для пользователя.
+     * @return Введенное число.
+     */
+    private static int inputNumber(String message) throws IOException {
+        return inputNumber(message, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Метод ввода целого числа в консоли в заданном диапазоне.
+     * @param message Сообщение для пользователя.
+     * @param min Минимальное допустимое значение.
+     * @return Введенное число.
+     */
+    private static int inputNumber(String message, int min) throws IOException {
+        return inputNumber(message, min, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Метод ввода целого числа в консоли в заданном диапазоне.
+     * @param message Сообщение для пользователя.
+     * @param min Минимальное допустимое значение.
+     * @param max Максимальное допустимое значение.
+     * @return Введенное число.
+     */
+    private static int inputNumber(String message, int min, int max) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        while (true)
+        {
+            System.out.print(message);
+            try {
+                int number = Integer.parseInt(reader.readLine());
+                if (number >= min && number <= max)
+                    return number;
+            } catch (NumberFormatException ignored) { }
+            System.out.println("Некорректный ввод! Повторите попытку...");
+        }
+    }
+
+    /**
+     * Метод ввода нескольких чисел в консоли.
+     * @param message Сообщение для пользователя.
+     * @param separator Строка для разделения чисел.
+     * @return Массив, содержвщий введенные числа.
+     */
+    private static int[] inputNumbers(String message, String separator) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        while (true)
+        {
+            System.out.print(message);
+            var symbols = reader.readLine().trim().split(separator);
+            if (symbols.length == 0)
+            {
+                System.out.println("Некорректный ввод! Повторите попытку...");
+                continue;
+            }
+            int[] numbers = new int[symbols.length];
+            try {
+                for (int i = 0; i < symbols.length; i++)
+                    numbers[i] = Integer.parseInt(symbols[i]);
+                return numbers;
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректный ввод! Повторите попытку...");
+            }
+        }
+    }
+
+    /**
+     * Метод ввода нескольких чисел в консоли через пробел.
+     * @param message Сообщение для пользователя.
+     * @return Массив, содержвщий введенные числа.
+     */
+    private static int[] inputNumbers(String message) throws IOException {
+        return inputNumbers(message, " ");
+    }
+
+    //endregion
 
     //region Задача 1
 
@@ -51,6 +132,48 @@ public class Program {
 
         String output = String.format("%s, %s!", timeOfDay, name);
         System.out.println(output);
+    }
+
+    //endregion
+
+    //region Задача 2
+
+    /**
+     * Условие:
+     * Дан массив двоичных чисел, например [1,1,0,1,1,1],
+     * вывести максимальное количество подряд идущих 1
+     */
+    private static void task2() throws IOException {
+        System.out.println("\n ** Подсчет максимального количество подряд идущих чисел с заданным значением. ** \n");
+        int[] numbers = inputNumbers("Укажите целые числа через пробел: ");
+        int number = inputNumber("Укажите число для поиска: ");
+        String output = String.format("Результат: %s", calcMaxRepeatLength(numbers, number));
+        System.out.println(output);
+    }
+
+    /**
+     * Метод подсчета колличества подряд идущих элементов, равных переданному значению.
+     * @param numbers Массив целых чисел.
+     * @param findNumber Значение искомого элемента.
+     * @return Колличество подряд идущих элементов, равных переданному значению
+     */
+    private static int calcMaxRepeatLength(int[] numbers, int findNumber)
+    {
+        if (numbers == null || numbers.length == 0)
+            return 0;
+
+        int max = 0;
+        int counter = 0;
+        for (int n: numbers)
+        {
+            if (n == findNumber) {
+                counter++;
+                if (counter > max)
+                    max = counter;
+            } else
+                counter = 0;
+        }
+        return max;
     }
 
     //endregion
