@@ -13,7 +13,7 @@ public class Program {
      * Точка входа в приложение.
      */
     public static void main(String[] args) throws IOException {
-        task3();
+        task4();
     }
 
     //region Методы пользавотельского ввода
@@ -217,6 +217,37 @@ public class Program {
                 result[k--] = transferredNumber;
 
         return result;
+    }
+
+    //endregion
+
+    //region Задача 4
+
+    /**
+     * Условие:
+     * Вычислить n-ое треугольное число
+     */
+    private static void task4() throws IOException {
+        System.out.println("\n ** Вывод треугольного числа с заданным индексом. ** \n");
+        int number = inputNumber("Укажите номер треугольного числа (> 0): ", 0);
+        String output = String.format("Результат: %s", findTriangleNumber(number));
+        System.out.println(output);
+    }
+
+    /**
+     * Метод поиска треугольного числа по заданному индексу.
+     * @param index Индекс треугольного числа.
+     * @return Треуголное число, расположенное по заданному индексу.
+     * Если передан отрицательны индекс, вернет -1.
+     */
+    private static int findTriangleNumber(int index)
+    {
+        if (index < 0)
+            return -1;
+        int number = 0;
+        for (int i = 0; i <= index; i++)
+            number += i;
+        return number;
     }
 
     //endregion
