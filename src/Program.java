@@ -3,9 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class Program {
 
@@ -13,7 +12,7 @@ public class Program {
      * Точка входа в приложение.
      */
     public static void main(String[] args) throws IOException {
-        task4();
+        task5();
     }
 
     //region Методы пользавотельского ввода
@@ -248,6 +247,122 @@ public class Program {
         for (int i = 0; i <= index; i++)
             number += i;
         return number;
+    }
+
+    //endregion
+
+    //region Задача 5
+
+    /**
+     * Условие:
+     * Задано уравнение вида q + w = e, q, w, e >= 0.
+     * Некоторые цифры могут быть заменены знаком вопроса, например 2? + ?5 = 69.
+     * Требуется восстановить выражение до верного равенства.
+     * Предложить хотя бы одно решение или сообщить, что его нет.
+     */
+    private static void task5() throws IOException {
+        System.out.println("\n ** Поиск пропущенных цифр в равенстве. ** \n");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String regex = "^[0-9?]{1,}[ ]{0,}[+]{1}[ ]{0,}[0-9?]{1,}[ ]{0,}=[ ]{0,}[0-9?]{1,}$";
+        Pattern pattern = Pattern.compile(regex);
+        String exp = null;
+        while (exp == null)
+        {
+            System.out.print("Введите выражение типа q? + ?w = e: ");
+            String input = reader.readLine().trim();
+            if (input.contains("?") && pattern.matcher(input).find())
+                exp = input;
+            else
+                System.out.println("Некорректный ввод! Повторите попытку...");
+        }
+
+        var expArr = exp.split("[ ]{0,}[+=]{1}[ ]{0,}");
+        List<Integer> digits = new ArrayList<>();
+        var sum = 0;
+
+        for (int i = 0; i < expArr.length; i++)
+            for (int j = 0; j < expArr[i].length(); j++)
+            {
+                var digit = (int)Math.pow(10, expArr[i].length() - j - 1);
+                if (expArr[i].charAt(j) == '?')
+                    digits.add(i < expArr.length - 1 ? digit : -digit);
+                else
+                {
+                    var n = Integer.parseInt(String.valueOf(expArr[i].charAt(j))) * digit;
+                    sum += i < expArr.length - 1 ? -n : n;
+                }
+            }
+
+        var passesArrays = findPasses(digits, sum);
+        if (passesArrays.size() == 0)
+        {
+            System.out.println("Решений не найдено!");
+            return;
+        }
+
+        for (char[] passes: passesArrays)
+        {
+            var expChars = exp.toCharArray();
+            for (int i = 0, counter = 0; i < expChars.length; i++)
+                if (expChars[i] == '?')
+                {
+                    expChars[i] = passes[counter];
+                    counter++;
+                }
+            System.out.println(new String(expChars));
+        }
+    }
+
+    /**
+     * Метод поиска поиска пропущенных чисел.
+     * @param digits Список, хранящий разряды пропущенных чисел.
+     * @param sum Сумма всех известных чисел.
+     * @return Список с массивами пропущенных символов.
+     */
+    private static List<char[]> findPasses(List<Integer> digits, int sum) {
+        return findPasses(digits, sum, new ArrayList<>(), new ArrayList<>());
+    }
+
+    /**
+     * Рекурсивный метод поиска поиска пропущенных чисел.
+     * @param digits Список, хранящий разряды пропущенных чисел.
+     * @param sum Сумма всех известных чисел.
+     * @param numbers Список, хранящий текущий проверяемый ряд чисел.
+     * @param result Список, хранящий массивы с результатами поиска.
+     * @return Список с массивами пропущенных символов.
+     */
+    private static List<char[]> findPasses(List<Integer> digits, int sum, List<Integer> numbers, List<char[]> result) {
+        if (digits == null || digits.size() == 0)
+            return Collections.emptyList();
+
+        if (numbers == null)
+            numbers = Collections.emptyList();
+
+        if (result == null)
+            result = Collections.emptyList();
+
+        List<Integer> digitsCopy = new ArrayList<>(digits);
+        var digit = digitsCopy.get(0);
+        digitsCopy.remove(0);
+        for (int i = 0; i < 10; i++)
+        {
+            List<Integer> numbersCopy = new ArrayList<>(numbers);
+            numbersCopy.add(i * digit);
+
+            if (digitsCopy.size() == 0)
+            {
+                if (numbersCopy.stream().reduce(0, Integer::sum) == sum)
+                {
+                    var res = new char[numbersCopy.size()];
+                    for (int j = 0; j < numbersCopy.size(); j++)
+                        res[j] = String.valueOf(numbersCopy.get(j)).charAt(numbersCopy.get(j) >= 0 ? 0 : 1);
+                    result.add(res);
+                }
+            }
+            else
+                findPasses(digitsCopy, sum, numbersCopy, result);
+        }
+        return result;
     }
 
     //endregion
