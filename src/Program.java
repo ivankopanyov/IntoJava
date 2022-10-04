@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,7 +10,7 @@ import java.util.logging.SimpleFormatter;
 
 public class Program {
     public static void main(String[] args) {
-        task2();
+        task3();
     }
 
     //region Общие методы
@@ -221,6 +222,79 @@ public class Program {
             System.out.print(". Расширение файла: ");
             System.out.println(extension);
         }
+    }
+
+    //endregion
+
+    //region Задача 3
+
+    /**
+     * Дана строка sql-запроса "select * from students where ".
+     * Сформируйте часть WHERE этого запроса, используя StringBuilder.
+     * Данные для фильтрации приведены ниже в виде json строки.
+     * Если значение null, то параметр не должен попадать в запрос.
+     * Параметры для фильтрации: {"name":"Ivanov", "country":"Russia", "city":"Moscow", "age":"null"}
+     * (используйте методы split и replace)
+     */
+    private static void task3() {
+        String tableName = "students";
+        String where = "{\"name\":\"Ivanov\", \"country\":\"Russia\", \"city\":\"Moscow\", \"age\":\"null\"}";
+        System.out.println(getSelectRequest(tableName, where));
+    }
+
+    /**
+     * Метод, формирующий SQL запрос select.
+     * @param tableName Имя таблицы.
+     * @param whereJsonData Параметры поиска.
+     * @return Сформированный запрос.
+     * @throws NullPointerException Возбуждается, если имя таблицы не инициализировано.
+     * @throws IllegalArgumentException Возбуждается, если имя таблицы пустое.
+     */
+    private static String getSelectRequest(String tableName, String whereJsonData)
+            throws NullPointerException, IllegalArgumentException {
+
+        if (tableName == null)
+            throw new NullPointerException("Имя таблицы не инициализировано.");
+
+        if (tableName.trim().equals(""))
+            throw new IllegalArgumentException("Имя таблицы не может быть пустым.");
+
+        String[] params = whereJsonData
+                .replace("{", "")
+                .replace("}", "")
+                .replace("\n", " ")
+                .split(", ");
+        StringBuilder stringBuilder = new StringBuilder()
+                .append("select * from ")
+                .append(tableName);
+
+        if (whereJsonData.trim().length() == 0)
+            return stringBuilder.toString();
+
+        boolean addAnd = false;
+        boolean whereIsAdded = false;
+        for (String param : params) {
+            String[] paramArray = param.split(":");
+            if (Objects.equals(paramArray[1], "\"null\""))
+                continue;
+
+            if (!whereIsAdded) {
+                stringBuilder.append(" where ");
+                whereIsAdded = true;
+            }
+
+            if (addAnd)
+                stringBuilder.append(" and ");
+
+            addAnd = true;
+
+            stringBuilder
+                    .append(paramArray[0].replace("\"", ""))
+                    .append(" = ")
+                    .append(paramArray[1]);
+        }
+
+        return stringBuilder.toString();
     }
 
     //endregion
