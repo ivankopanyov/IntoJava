@@ -9,59 +9,10 @@ import java.util.logging.SimpleFormatter;
 
 public class Program {
     public static void main(String[] args) {
-        task1();
+        task2();
     }
 
-    //region Задача 1
-
-    /**
-     * Напишите метод, который вернет содержимое текущей папки в виде массива строк.
-     * Напишите метод, который запишет массив, возвращенный предыдущим методом в файл.
-     * Обработайте ошибки с помощью try-catch конструкции.
-     * В случае возникновения исключения, оно должно записаться в лог-файл.
-     */
-    private static void task1() {
-        Logger logger = null;
-        try {
-            logger = getFileSimpleLogger("log.txt");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        String folderName = null;
-        String[] items = null;
-        while (true) {
-            System.out.print("Укажите путь к каталогу: ");
-            try {
-                folderName = reader.readLine();
-                items = getFolderItemsNames(folderName);
-                break;
-            } catch (Exception e) {
-                if (logger != null)
-                    logger.log(Level.INFO, e.getMessage(), e);
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String tree = getTreeString(folderName, items);
-
-        while (true) {
-            System.out.print("Укажите путь к файлу для записи: ");
-            try {
-                String fileName = reader.readLine();
-                writeToFile(fileName, tree);
-                break;
-            } catch (Exception e) {
-                if (logger != null)
-                    logger.log(Level.INFO, e.getMessage(), e);
-                System.out.println(e.getMessage());
-            }
-        }
-
-        System.out.println("Данные успешно записаны!");
-    }
+    //region Общие методы
 
     /**
      * Метод, создающий объект логгера.
@@ -115,6 +66,59 @@ public class Program {
         return folder.list();
     }
 
+    //endregion
+
+    //region Задача 1
+
+    /**
+     * Напишите метод, который вернет содержимое текущей папки в виде массива строк.
+     * Напишите метод, который запишет массив, возвращенный предыдущим методом в файл.
+     * Обработайте ошибки с помощью try-catch конструкции.
+     * В случае возникновения исключения, оно должно записаться в лог-файл.
+     */
+    private static void task1() {
+        Logger logger = null;
+        try {
+            logger = getFileSimpleLogger("log.txt");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String folderName = null;
+        String[] items = null;
+        while (true) {
+            System.out.print("Укажите путь к каталогу: ");
+            try {
+                folderName = reader.readLine();
+                items = getFolderItemsNames(folderName);
+                break;
+            } catch (Exception e) {
+                if (logger != null)
+                    logger.log(Level.INFO, e.getMessage(), e);
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String tree = getTreeString(folderName, items);
+
+        while (true) {
+            System.out.print("Укажите путь к файлу для записи: ");
+            try {
+                String fileName = reader.readLine();
+                writeToFile(fileName, tree);
+                break;
+            } catch (Exception e) {
+                if (logger != null)
+                    logger.log(Level.INFO, e.getMessage(), e);
+                System.out.println(e.getMessage());
+            }
+        }
+
+        System.out.println("Данные успешно записаны!");
+    }
+
     /**
      * Метод формирования дерева каталогов и файлов.
      *
@@ -166,6 +170,56 @@ public class Program {
             fileWriter.write(data);
         } catch (IOException e) {
             throw new IOException("Не удалось записать данные в файл.", e.getCause());
+        }
+    }
+
+    //endregion
+
+    //region Задача 2
+
+    /**
+     * Напишите метод, который определит тип (расширение) файлов из текущей папки и выведет в консоль результат вида
+     * 1 Расширение файла: txt
+     * 2 Расширение файла: pdf
+     * 3 Расширение файла:
+     * 4 Расширение файла: jpg
+     */
+    private static void task2() {
+        Logger logger = null;
+        try {
+            logger = getFileSimpleLogger("log.txt");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String folderName = null;
+        String[] items = null;
+        while (true) {
+            System.out.print("Укажите путь к каталогу: ");
+            try {
+                folderName = reader.readLine();
+                items = getFolderItemsNames(folderName);
+                break;
+            } catch (Exception e) {
+                if (logger != null)
+                    logger.log(Level.INFO, e.getMessage(), e);
+                System.out.println(e.getMessage());
+            }
+        }
+
+        if (items.length == 0) {
+            System.out.print("Каталог пуст!");
+            return;
+        }
+
+        for (int i = 0; i < items.length; i++) {
+            String[] fileNameArray = items[i].split("\\.");
+            String extension = fileNameArray.length == 1 ? "" : fileNameArray[fileNameArray.length - 1];
+            System.out.print(i + 1);
+            System.out.print(". Расширение файла: ");
+            System.out.println(extension);
         }
     }
 
