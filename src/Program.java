@@ -9,7 +9,13 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Program {
+
+    /**
+     * Точка входа в приложение.
+     */
     public static void main(String[] args) {
+        task1();
+        task2();
         task3();
     }
 
@@ -56,6 +62,9 @@ public class Program {
         if (folderName == null)
             throw new NullPointerException("Строка с именем каталога не инициализирована.");
 
+        if (folderName.trim().equals(""))
+            throw new IllegalArgumentException("Строка с именем каталога не должна быть пустой.");
+
         Path path = Paths.get(folderName);
         if (!Files.exists(path))
             throw new FileNotFoundException("Указанная директория не найдена.");
@@ -78,9 +87,10 @@ public class Program {
      * В случае возникновения исключения, оно должно записаться в лог-файл.
      */
     private static void task1() {
+        System.out.println("\n** Запись содержимого указанного каталога в указанный файл. **\n");
         Logger logger = null;
         try {
-            logger = getFileSimpleLogger("log.txt");
+            logger = getFileSimpleLogger("task1.log");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -186,9 +196,10 @@ public class Program {
      * 4 Расширение файла: jpg
      */
     private static void task2() {
+        System.out.println("\n** Вывод расширений файлов в указанном каталоге. **\n");
         Logger logger = null;
         try {
-            logger = getFileSimpleLogger("log.txt");
+            logger = getFileSimpleLogger("task2.log");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -237,6 +248,7 @@ public class Program {
      * (используйте методы split и replace)
      */
     private static void task3() {
+        System.out.println("\n** Формирование SQL запроса. **\n");
         String tableName = "students";
         String where = "{\"name\":\"Ivanov\", \"country\":\"Russia\", \"city\":\"Moscow\", \"age\":\"null\"}";
         System.out.println(getSelectRequest(tableName, where));
