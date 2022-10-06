@@ -10,21 +10,7 @@ public class Program {
      */
     public static void main(String[] args) {
         task1();
-    }
-
-    // region Задача 1
-
-    /**
-     * Пусть дан произвольный список целых чисел, удалить из него четные числа
-     */
-    private static void task1() {
-        System.out.println("\n ** Удаление четных чисел из списка. ** \n");
-        List<Integer> numbers = getRandomIntList(10, 20, -100, 100);
-        System.out.println(numbers);
-        for (int i = numbers.size() - 1; i >= 0; i--)
-            if (numbers.get(i) % 2 == 0)
-                numbers.remove(i);
-        System.out.println(numbers);
+        task2();
     }
 
     /**
@@ -59,7 +45,40 @@ public class Program {
         return numbers;
     }
 
+    // region Задача 1
+
+    /**
+     * Пусть дан произвольный список целых чисел, удалить из него четные числа
+     */
+    private static void task1() {
+        System.out.println("\n ** Удаление четных чисел из списка. ** \n");
+        List<Integer> numbers = getRandomIntList(10, 20, -100, 100);
+        System.out.println(numbers);
+        for (int i = numbers.size() - 1; i >= 0; i--)
+            if (numbers.get(i) % 2 == 0)
+                numbers.remove(i);
+        System.out.println(numbers);
+    }
+
     // endregion
 
+    // region Задача 2
 
+    /**
+     * Задан целочисленный список ArrayList.
+     * Найти минимальное, максимальное и среднее арифметическое из этого списка. (Collections.max())
+     */
+    private static void task2() {
+        System.out.println("\n ** Поиск минимального, максимального и среднего арифметического значений списка. ** \n");
+        List<Integer> numbers = getRandomIntList(10, 20, -100, 100);
+        System.out.println(numbers);
+        System.out.print("Максимальное значение: ");
+        System.out.println(Collections.max(numbers));
+        System.out.print("Минимальное значение: ");
+        System.out.println(Collections.min(numbers));
+        System.out.print("Среднее арифметическое: ");
+        System.out.println(numbers.size() == 0 ? 0 : numbers.stream().reduce(0, Integer::sum) / (double)numbers.size());
+    }
+
+    // endregion
 }
