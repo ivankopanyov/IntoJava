@@ -40,7 +40,7 @@ public class Program {
         Random random = new Random();
         int size = minSize == maxSize ? minSize : random.nextInt(minSize, maxSize);
         List<Integer> numbers = new ArrayList<>(size);
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < size; i++)
             numbers.add(minValue == maxValue ? minValue : random.nextInt(minValue, maxValue));
 
         return numbers;
