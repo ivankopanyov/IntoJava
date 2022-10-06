@@ -11,6 +11,7 @@ public class Program {
     public static void main(String[] args) {
         task1();
         task2();
+        task3();
     }
 
     /**
@@ -78,6 +79,77 @@ public class Program {
         System.out.println(Collections.min(numbers));
         System.out.print("Среднее арифметическое: ");
         System.out.println(numbers.size() == 0 ? 0 : numbers.stream().reduce(0, Integer::sum) / (double)numbers.size());
+    }
+
+    // endregion
+
+    // region Задача 3
+
+    /**
+     * Реализовать алгоритм сортировки слиянием
+     */
+    private static void task3() {
+        System.out.println("\n ** Мердж сорт. ** \n");
+        List<Integer> list = getRandomIntList(10, 20, -100, 100);
+        System.out.println(list);
+
+        mergeSort(list);
+        System.out.println(list);
+        System.out.println();
+    }
+
+    /**
+     * Метод сортировки переданного списка целых чисел слиянием.
+     * @param list Список для сортировки.
+     */
+    private static void mergeSort(List<Integer> list) {
+        sortList(list, 0, list.size() - 1);
+    }
+
+    /**
+     * Рекурсивный метод разделения и слияния списка.
+     * @param list Список для сортировки
+     * @param left Начальный индекс.
+     * @param right Конечный индекс.
+     */
+    private static void sortList(List<Integer> list, int left, int right) {
+        if (left < right)
+        {
+            int middle = left + (right - left) / 2;
+            sortList(list, left, middle);
+            sortList(list, middle + 1, right);
+            mergeList(list, left, middle, right);
+        }
+    }
+
+    /**
+     * Метод разделения и сортировки списка.
+     * @param list Список для сортировки.
+     * @param left Индекс начального элемента.
+     * @param middle Индекс среднего элемента.
+     * @param right Индекс конечного элемента.
+     */
+    public static void mergeList(List<Integer> list, int left, int middle, int right) {
+        List<Integer> leftList = new ArrayList<>(middle - left + 1);
+        for (int i = 0; i < middle - left + 1; i++)
+            leftList.add(list.get(left + i));
+
+        List<Integer> rightList = new ArrayList<>(right - middle);
+        for (int i = 0; i < right - middle; i++)
+            rightList.add(list.get(middle + i + 1));
+
+        int i = 0;
+        int j = 0;
+        int k = left;
+
+        while (i < leftList.size() && j < rightList.size())
+            list.set(k++, leftList.get(i) <= rightList.get(j) ? leftList.get(i++) : rightList.get(j++));
+
+        while (i < leftList.size())
+            list.set(k++, leftList.get(i++));
+
+        while (j < rightList.size())
+            list.set(k++, rightList.get(j++));
     }
 
     // endregion
