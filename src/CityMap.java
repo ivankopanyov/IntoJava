@@ -70,15 +70,15 @@ public class CityMap implements Iterable<Place> {
      * @param place Экземпляр места для удаления.
      */
     public void remove(Place place) {
-        if (place == null || place.address() == null || !this.places.containsKey(place.address()))
+        if (place == null || place.address() == null || !places.containsKey(place.address()))
             return;
 
-        Set<Place> set = this.places.get(place.address());
+        Set<Place> set = places.get(place.address());
 
         if (set.contains(place)) {
             set.remove(place);
             if (set.size() == 0)
-                this.places.remove(place.address());
+                places.remove(place.address());
         }
     }
 
