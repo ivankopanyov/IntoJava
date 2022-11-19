@@ -8,13 +8,16 @@ import presenter.IdentityPresenter;
 import view.IdentityView;
 
 public class Program {
-    public static void main(String[] args) {
 
+    /**
+     * Точка входа в приложение.
+     */
+    public static void main(String[] args) {
         Validator<IdentityUser> validator = new UserValidator<>(
+                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+                "^.{8,}$",
                 null,
-                null,
-                null,
-                "Пароль должен содержать:\n\tминимум одну цифру\n\tминимум одну латинскую букву в нижнем регистре\n\tминимум одну латинскую букву в верхнем регистре\n\tминимум один специальный символ\n\tминимум 8 символов"
+                "\nПароль должен содержать минимум 8 символов"
                 );
 
         Manager<IdentityUser> userManager = new UserManager<>(validator);
