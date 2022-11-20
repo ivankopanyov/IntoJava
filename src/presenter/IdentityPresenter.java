@@ -59,7 +59,7 @@ public class IdentityPresenter {
             else
                 accountMenu();
 
-        System.out.println("Завершение работы приложения...");
+        view.print("Завершение работы приложения...");
 
     }
 
@@ -121,7 +121,7 @@ public class IdentityPresenter {
         String email = view.input(titles)[0].trim();
 
         if (email.equals("")) {
-            System.out.println("Email не должен быть пустым!");
+            view.print("Email не должен быть пустым!");
             return;
         }
 
@@ -134,7 +134,7 @@ public class IdentityPresenter {
             current = manager.create(user);
             current.setPassword(user.getPassword());
         } catch (IdentityException e) {
-            System.out.println(e.getMessage());
+            view.print(e.getMessage());
         }
     }
 
@@ -324,12 +324,12 @@ public class IdentityPresenter {
         String[] input = view.input(titles);
 
         if (List.of(input).contains("")) {
-            System.out.println("Пароль не должен быть пустым!");
+            view.print("Пароль не должен быть пустым!");
             return null;
         }
 
         if (!input[0].equals(input[1])) {
-            System.out.println("Пароли не совпадают!");
+            view.print("Пароли не совпадают!");
             return null;
         }
 
