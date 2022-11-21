@@ -1,39 +1,28 @@
-import Controllers.NotebookController;
-import Models.NotebookFilter;
-import Repositories.NotebookRepository;
-import Services.NotebookBuilder;
-import Views.MainView;
-
-import java.io.IOException;
+import abstractions.Manager;
+import abstractions.Validator;
+import abstractions.View;
+import model.identity.UserManager;
+import model.UserValidator;
+import model.IdentityUser;
+import presenter.IdentityPresenter;
+import view.IdentityView;
 
 public class Program {
-
-    /*
-        Подумать над структурой класса Ноутбук для магазина техники - выделить поля и методы. Реализовать в java.
-        Создать множество ноутбуков.
-        Написать метод, который будет запрашивать у пользователя критерий (или критерии) фильтрации и выведет ноутбуки,
-        отвечающие фильтру. Критерии фильтрации можно хранить в Map. Например:
-        “Введите цифру, соответствующую необходимому критерию:
-        1 - ОЗУ
-        2 - Объем ЖД
-        3 - Операционная система
-        4 - Цвет …
-        Далее нужно запросить минимальные значения для указанных критериев -
-        сохранить параметры фильтрации можно также в Map.
-        Отфильтровать ноутбуки из первоначального множества и вывести проходящие по условиям.
-     */
 
     /**
      * Точка входа в приложение.
      */
-    public static void main(String[] args) throws IOException {
-        NotebookRepository repository = new NotebookRepository();
-        NotebookFilter notebookFilter = new NotebookFilter();
-        NotebookController notebookController = new NotebookController(repository);
-        NotebookBuilder notebookBuilder = new NotebookBuilder();
-        for (int i = 1; i <= 20; i++)
-            notebookController.add(notebookBuilder.getRandom());
-        MainView view = new MainView(notebookController, notebookFilter);
-        view.Start();
+    public static void main(String[] args) {
+        Validator<IdentityUser> validator = new UserValidator<>(
+                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+                "^.{8,}$",
+                null,
+                "\nПароль должен содержать минимум 8 символов"
+                );
+
+        Manager<IdentityUser> userManager = new UserManager<>(validator);
+        View view = new IdentityView();
+        IdentityPresenter presenter = new IdentityPresenter(userManager, view);
+        presenter.run();
     }
 }
