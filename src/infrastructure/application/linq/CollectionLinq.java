@@ -42,6 +42,10 @@ public class CollectionLinq<T> implements ObjectLinq<Collection<T>, T>  {
         return new CollectionLinq<>(items);
     }
 
+    public boolean contains(T value) {
+        return first(item -> item.equals(value)) != null;
+    }
+
     public int count() {
         return collection.size();
     }

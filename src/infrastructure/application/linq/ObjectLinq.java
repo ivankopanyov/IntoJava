@@ -9,5 +9,7 @@ public interface ObjectLinq<TStruct, TItem> {
 
     ObjectLinq<TStruct, TItem> where(Expression<TItem, Boolean> predicate);
 
+    boolean contains(TItem value);
+
     int count();
 }

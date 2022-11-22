@@ -21,12 +21,11 @@ public class Program {
     public static void main(String[] args) throws InvocationTargetException, InstantiationException, IllegalAccessException {
 
         new AppBuilder()
-                .addPresenter(Presenter1.class)
+                .addStartPresenter(Presenter1.class)
                 .addView(View1.class)
                 .addView(View2.class)
                 .addService(TestService1.class, TestService1Impl.class)
                 .addService(TestService2.class, TestService2Impl.class)
-                .addSingletonService(TestService1.class, TestService1Impl.class)
                 .build();
 
 

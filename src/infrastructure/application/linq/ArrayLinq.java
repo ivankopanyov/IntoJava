@@ -45,6 +45,10 @@ public class ArrayLinq<T> implements ObjectLinq<T[], T> {
         return new ArrayLinq<>((T[]) items.toArray());
     }
 
+    public boolean contains(T value) {
+        return first(item -> item.equals(value)) != null;
+    }
+
     public int count() {
         return array.length;
     }
