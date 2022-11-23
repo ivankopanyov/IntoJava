@@ -1,4 +1,6 @@
 package infrastructure.application;
 
-public abstract class ViewBase {
-}
+/**
+ * Класс, описывающий базовый объект представления.
+ */
+public abstract class ViewBase { }

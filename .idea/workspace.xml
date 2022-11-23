@@ -2,14 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0c6ff89-d7ca-4668-b14b-7e94c3b1ceef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/application/PresenterBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/infrastructure/application/PresenterHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/infrastructure/application/exceptions/ApplicationBuilderException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/infrastructure/application/exceptions/PresenterHandlerException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/UserValidatorV2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/presenter/ExitPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/presenter/IdentityPresenterV2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/view/ExitView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/view/IdentityViewV2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Presenter1.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Program.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/ExtraViewBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestService1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestService1Impl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestService2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestService2Impl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/ApplicationBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/PresenterBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/PresenterBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/PresenterBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/PresenterBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/ServiceBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/ServiceBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/ViewBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/ViewBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/application/ViewBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/ViewBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/application/linq/ArrayLinq.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/linq/ArrayLinq.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/application/linq/CollectionLinq.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/linq/CollectionLinq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/application/linq/Linq.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/linq/Linq.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/application/linq/ObjectLinq.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/application/linq/ObjectLinq.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

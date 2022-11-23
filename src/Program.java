@@ -1,45 +1,45 @@
 import abstractions.Manager;
 import abstractions.Validator;
 import abstractions.View;
-import infrastructure.application.AppBuilder;
-import infrastructure.application.ServiceBuilder;
+import infrastructure.application.Application;
+import infrastructure.application.ApplicationBuilder;
+import infrastructure.application.exceptions.ApplicationBuilderException;
+import infrastructure.application.exceptions.PresenterHandlerException;
+import model.UserValidatorV2;
 import model.identity.UserManager;
 import model.UserValidator;
 import model.IdentityUser;
+import presenter.ExitPresenter;
 import presenter.IdentityPresenter;
+import presenter.IdentityPresenterV2;
+import view.ExitView;
 import view.IdentityView;
+import view.IdentityViewV2;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Program {
 
     /**
      * Точка входа в приложение.
      */
-    public static void main(String[] args) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) {
 
-        new AppBuilder()
-                .addStartPresenter(Presenter1.class)
-                .addView(View1.class)
-                .addView(View2.class)
-                .addService(TestService1.class, TestService1Impl.class)
-                .addService(TestService2.class, TestService2Impl.class)
+        try {
+            Application app = new ApplicationBuilder()
+                .addStartPresenter("main", IdentityPresenterV2.class)
+                .addPresenter("exit", ExitPresenter.class)
+                .addView(IdentityViewV2.class)
+                .addView(ExitView.class)
+                .addService(Manager.class, UserManager.class)
+                .addService(Validator.class, UserValidatorV2.class)
                 .build();
 
+            app.run();
 
-
-        Validator<IdentityUser> validator = new UserValidator<>(
-                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
-                "^.{8,}$",
-                null,
-                "\nПароль должен содержать минимум 8 символов"
-                );
-
-        Manager<IdentityUser> userManager = new UserManager<>(validator);
-        View view = new IdentityView();
-        IdentityPresenter presenter = new IdentityPresenter(userManager, view);
-        presenter.run();
+        } catch (ApplicationBuilderException | PresenterHandlerException e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
     }
 }
