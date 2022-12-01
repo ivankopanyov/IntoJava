@@ -37,7 +37,7 @@ public class Program {
             try {
                 System.out.println(Arrays.toString(differenceArray(arg1, arg2)));
             }
-            catch (IndexOutOfBoundsException e) {
+            catch (RuntimeException e) {
                 System.out.println(e.getMessage());
             }
 
@@ -45,11 +45,8 @@ public class Program {
             try {
                 System.out.println(Arrays.toString(divideArray(arg1, arg2)));
             }
-            catch (IndexOutOfBoundsException e) {
+            catch (RuntimeException e) {
                 System.out.println(e.getMessage());
-            }
-            catch (ArithmeticException e) {
-                System.out.println("Деление на ноль!");
             }
         }
     }
@@ -95,6 +92,7 @@ public class Program {
      */
     public static int[] stringToIntArray(String str)
             throws NullPointerException, NumberFormatException {
+
         String[] arr = str.trim().split("\\s+");
         int[] result = new int[arr.length];
         for (int i = 0; i < arr.length; i++)
@@ -108,14 +106,14 @@ public class Program {
      * @param minuend Уменьшаемый массив.
      * @param subtrahend Вычитаемый массив.
      * @return Разность массивов.
-     * @throws NullPointerException Переданный массив не инициализирован.
-     * @throws IndexOutOfBoundsException Длины массивов не совпадают.
      */
-    public static int[] differenceArray(int[] minuend, int[] subtrahend)
-            throws NullPointerException, IndexOutOfBoundsException {
+    public static int[] differenceArray(int[] minuend, int[] subtrahend) {
+
+        if (minuend == null || subtrahend == null)
+            throw new RuntimeException("Передан неинициализированный массив");
 
         if (minuend.length != subtrahend.length)
-            throw new IndexOutOfBoundsException("Длины массивов не совпадают!");
+            throw new RuntimeException("Длины массивов не совпадают!");
 
         int[] result = new int[minuend.length];
 
@@ -130,19 +128,21 @@ public class Program {
      * @param dividend Делимый массив.
      * @param divider Массив делитель.
      * @return Частное массивов.
-     * @throws NullPointerException Переданный массив не инициализирован.
-     * @throws IndexOutOfBoundsException Длины масивов не совпадают.
-     * @throws ArithmeticException Массив делитель содержит ноль.
      */
-    public static double[] divideArray(int[] dividend, int[] divider)
-            throws NullPointerException, IndexOutOfBoundsException, ArithmeticException {
+    public static int[] divideArray(int[] dividend, int[] divider) {
+
+        if (dividend == null || divider == null)
+            throw new RuntimeException("Передан неинициализированный массив");
 
         if (dividend.length != divider.length)
-            throw new IndexOutOfBoundsException("Длины массивов не совпадают!");
+            throw new RuntimeException("Длины массивов не совпадают!");
 
-        double[] result = new double[dividend.length];
+        int[] result = new int[dividend.length];
 
         for (int i = 0; i < dividend.length; i++) {
+            if (divider[i] == 0)
+                throw new RuntimeException("Деление на ноль");
+
             result[i] = dividend[i] / divider[i];
         }
 
