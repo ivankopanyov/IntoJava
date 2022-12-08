@@ -49,23 +49,14 @@ public class FileRepository implements Repository {
         try {
             Files.createDirectories(Paths.get(directoryName));
         } catch (Exception e) {
-            throw new RepositoryException("Не удалось сделать запись!", e);
+            throw new RepositoryException("Не удалось записать данные в файл!", e);
         }
 
         File file = new File(directoryName + '/' + model.getKey().toLowerCase() + ".txt");
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(file,true);
+        try (FileWriter fileWriter = new FileWriter(file,true)) {
             fileWriter.write(model.toString() + '\n');
         } catch (IOException e) {
             throw new RepositoryException("Не удалось записать данные в файл!", e);
-        } finally {
-            try {
-                assert fileWriter != null;
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -82,14 +73,11 @@ public class FileRepository implements Repository {
             while (line != null) {
                 try {
                     models.add(mapper.map(line));
-                } catch (MapperException e) {
-                    e.printStackTrace();
-                }
+                } catch (MapperException ignored) { }
                 line = br.readLine();
             }
             return models;
         } catch (IOException e) {
-            e.printStackTrace();
             return Collections.emptyList();
         }
     }
@@ -118,7 +106,6 @@ public class FileRepository implements Repository {
             return models;
 
         } catch (Exception e) {
-            e.printStackTrace();
             return Collections.emptyList();
         }
     }
